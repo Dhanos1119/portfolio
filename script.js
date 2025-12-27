@@ -1,3 +1,8 @@
+(function () {
+  emailjs.init("vTDh9D6uYL4B7e98W");
+})();
+
+
 /* ================================
    GLOBAL VARIABLES (CERT MODAL)
 ================================ */
@@ -219,29 +224,54 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ================================
    NAVBAR CLICK OFFSET FIX
 ================================ */
-const navbar = document.querySelector(".navbar");
-const navLinksAll = document.querySelectorAll(".navbar nav a");
 
-if (navbar) {
-  const navbarHeight = navbar.offsetHeight;
+/* ===============================
+   SCROLL REVEAL LOGIC
+================================ */
+const reveals = document.querySelectorAll(".reveal");
 
-  navLinksAll.forEach(link => {
-    link.addEventListener("click", e => {
-      const targetId = link.getAttribute("href");
-      if (!targetId || !targetId.startsWith("#")) return;
+function revealOnScroll() {
+  const windowHeight = window.innerHeight;
 
-      const targetEl = document.querySelector(targetId);
-      if (!targetEl) return;
+  reveals.forEach((el, i) => {
+    const top = el.getBoundingClientRect().top;
 
-      e.preventDefault();
+    if (top < windowHeight - 120) {
+      el.classList.add("show");
+      el.style.setProperty("--delay", `${i * 0.08}s`);
+    }
+  });
+}
 
-      const y =
-        targetEl.getBoundingClientRect().top +
-        window.pageYOffset -
-        navbarHeight -
-        10;
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
+/* ================================
+   CONTACT FORM – EMAILJS
+================================ */
+const contactForm = document.getElementById("contact-form");
 
-      window.scrollTo({ top: y, behavior: "smooth" });
-    });
+if (contactForm) {
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // set current time
+    this.time.value = new Date().toLocaleString();
+
+    emailjs
+      .sendForm(
+        "service_zjhcunj",
+        "template_pbj3tfa",
+        this
+      )
+      .then(
+        () => {
+          alert("✅ Message sent successfully!");
+          contactForm.reset();
+        },
+        (error) => {
+          alert("❌ Failed to send message");
+          console.error(error);
+        }
+      );
   });
 }
