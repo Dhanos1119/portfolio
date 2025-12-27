@@ -1,19 +1,75 @@
+/* ================================
+   GLOBAL VARIABLES (CERT MODAL)
+================================ */
+let scale = 1;
+let startDistance = 0;
+let certImg = null;
+
+/* ================================
+   CERTIFICATE FUNCTIONS
+================================ */
+function setActiveCert(el) {
+  document.querySelectorAll(".cert-item").forEach(item =>
+    item.classList.remove("active")
+  );
+  el.classList.add("active");
+}
+
+function openCert(e) {
+  e.preventDefault();
+
+  const imgSrc = e.target.dataset.img;
+  const modal = document.getElementById("certModal");
+  certImg = document.getElementById("certImage");
+
+  certImg.src = imgSrc;
+  scale = 1;
+  certImg.style.transform = "scale(1)";
+
+  modal.classList.add("show");
+}
+
+function closeCert() {
+  const modal = document.getElementById("certModal");
+  modal.classList.remove("show");
+
+  if (certImg) {
+    scale = 1;
+    certImg.style.transform = "scale(1)";
+  }
+}
+
+/* ================================
+   DISTANCE HELPER (PINCH)
+================================ */
+function getDistance(t1, t2) {
+  const dx = t1.clientX - t2.clientX;
+  const dy = t1.clientY - t2.clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+/* ================================
+   MAIN SCRIPT
+================================ */
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ================================
      NAV ACTIVE LINK ON SCROLL
   ================================ */
   const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll("nav a");
+  const navLinks = document.querySelectorAll(".navbar nav a");
 
   window.addEventListener("scroll", () => {
     let current = "";
 
     sections.forEach(section => {
-      const sectionTop = section.offsetTop - 120;
+      const sectionTop = section.offsetTop - 140;
       const sectionHeight = section.offsetHeight;
 
-      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+      if (
+        window.scrollY >= sectionTop &&
+        window.scrollY < sectionTop + sectionHeight
+      ) {
         current = section.getAttribute("id");
       }
     });
@@ -50,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (topBtn) {
     window.addEventListener("scroll", () => {
-      topBtn.style.display = scrollY > 400 ? "block" : "none";
+      topBtn.style.display = window.scrollY > 400 ? "block" : "none";
     });
 
     topBtn.addEventListener("click", () => {
@@ -61,34 +117,27 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ================================
      TYPING ROLE ANIMATION
   ================================ */
-  const roles = ["Full Stack Developer", "Full Stack Developer"];
-  let roleIndex = 0;
+  const roleText = document.getElementById("roleText");
+  const roles = ["Full Stack Developer"];
   let charIndex = 0;
   let isDeleting = false;
-
-  const roleText = document.getElementById("roleText");
 
   function typeEffect() {
     if (!roleText) return;
 
-    const currentRole = roles[roleIndex];
+    const text = roles[0];
 
     if (!isDeleting) {
-      roleText.textContent = currentRole.slice(0, charIndex + 1);
+      roleText.textContent = text.slice(0, charIndex + 1);
       charIndex++;
-
-      if (charIndex === currentRole.length) {
-        setTimeout(() => (isDeleting = true), 1000);
+      if (charIndex === text.length) {
+        setTimeout(() => (isDeleting = true), 1200);
         return;
       }
     } else {
-      roleText.textContent = currentRole.slice(0, charIndex - 1);
+      roleText.textContent = text.slice(0, charIndex - 1);
       charIndex--;
-
-      if (charIndex === 0) {
-        isDeleting = false;
-        roleIndex = (roleIndex + 1) % roles.length;
-      }
+      if (charIndex === 0) isDeleting = false;
     }
 
     setTimeout(typeEffect, isDeleting ? 50 : 90);
@@ -121,103 +170,78 @@ document.addEventListener("DOMContentLoaded", () => {
   showProjects();
 
   /* ================================
-     PROJECT SLIDER
+     CERTIFICATES DEFAULT ACTIVE
   ================================ */
-  const slider = document.querySelector(".projects-slider");
-  let isHovering = false;
-
-  if (slider) {
-    const cards = slider.querySelectorAll(".project-card");
-
-    function updateActiveCard() {
-      if (isHovering) return;
-
-      const center = slider.scrollLeft + slider.offsetWidth / 2;
-
-      cards.forEach(card => {
-        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-        card.classList.remove("active");
-
-        if (Math.abs(center - cardCenter) < card.offsetWidth / 2) {
-          card.classList.add("active");
-        }
-      });
-    }
-
-    slider.addEventListener("scroll", updateActiveCard);
-    window.addEventListener("resize", updateActiveCard);
-    setTimeout(updateActiveCard, 200);
-
-    cards.forEach(card => {
-      card.addEventListener("mouseenter", () => {
-        isHovering = true;
-        cards.forEach(c => c.classList.remove("active"));
-      });
-
-      card.addEventListener("mouseleave", () => {
-        isHovering = false;
-        updateActiveCard();
-      });
-    });
-  }
+  const certItems = document.querySelectorAll(".cert-item");
+  if (certItems.length) certItems[0].classList.add("active");
 
   /* ================================
-     CONTACT FORM – EMAILJS ✅🔥
+     CERT IMAGE ZOOM (AFTER MODAL OPEN)
   ================================ */
+  const modal = document.getElementById("certModal");
+  const img = document.getElementById("certImage");
 
-  if (typeof emailjs !== "undefined") {
-    emailjs.init("vTDh9D6uYL4B7e98W"); // ✅ Public Key
-  }
+  if (img) {
+    /* MOBILE PINCH ZOOM */
+    img.addEventListener("touchstart", e => {
+      if (e.touches.length === 2) {
+        startDistance = getDistance(e.touches[0], e.touches[1]);
+      }
+    });
 
-  const contactForm = document.getElementById("contact-form");
+    img.addEventListener(
+      "touchmove",
+      e => {
+        if (e.touches.length === 2) {
+          e.preventDefault();
+          const newDistance = getDistance(e.touches[0], e.touches[1]);
+          const zoomFactor = newDistance / startDistance;
 
-  if (contactForm) {
-    contactForm.addEventListener("submit", function (e) {
+          scale = Math.min(Math.max(scale * zoomFactor, 1), 3);
+          img.style.transform = `scale(${scale})`;
+
+          startDistance = newDistance;
+        }
+      },
+      { passive: false }
+    );
+
+    /* DESKTOP MOUSE WHEEL ZOOM */
+    img.addEventListener("wheel", e => {
       e.preventDefault();
-
-      emailjs.sendForm(
-        "service_zjhcunj",      // ✅ Service ID
-        "template_pbj3tfa",     // ✅ TEMPLATE ID (FIXED)
-        this
-      )
-      .then(() => {
-        alert("✅ Message sent successfully!");
-        this.reset();
-      })
-      .catch((error) => {
-        console.error("EmailJS error:", error);
-        alert("❌ Failed to send message");
-      });
+      scale += e.deltaY < 0 ? 0.1 : -0.1;
+      scale = Math.min(Math.max(scale, 1), 3);
+      img.style.transform = `scale(${scale})`;
     });
   }
-
 });
+
 /* ================================
-   NAVBAR CLICK FIX (OFFSET SCROLL)
+   NAVBAR CLICK OFFSET FIX
 ================================ */
+const navbar = document.querySelector(".navbar");
 const navLinksAll = document.querySelectorAll(".navbar nav a");
-const navbarHeight = document.querySelector(".navbar").offsetHeight;
 
-navLinksAll.forEach(link => {
-  link.addEventListener("click", function (e) {
-    const targetId = this.getAttribute("href");
+if (navbar) {
+  const navbarHeight = navbar.offsetHeight;
 
-    if (targetId.startsWith("#")) {
+  navLinksAll.forEach(link => {
+    link.addEventListener("click", e => {
+      const targetId = link.getAttribute("href");
+      if (!targetId || !targetId.startsWith("#")) return;
+
       const targetEl = document.querySelector(targetId);
+      if (!targetEl) return;
 
-      if (targetEl) {
-        e.preventDefault();
+      e.preventDefault();
 
-        const elementPosition =
-          targetEl.getBoundingClientRect().top + window.pageYOffset;
+      const y =
+        targetEl.getBoundingClientRect().top +
+        window.pageYOffset -
+        navbarHeight -
+        10;
 
-        const offsetPosition = elementPosition - navbarHeight - 10;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-      }
-    }
+      window.scrollTo({ top: y, behavior: "smooth" });
+    });
   });
-});
+}

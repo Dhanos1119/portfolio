@@ -155,74 +155,251 @@
 
 
 <!-- SKILLS -->
-<section id="skills" class="section skills-section">
-  <span class="pill">SKILLS</span>
-  <h3>Technical Skills</h3>
+<section id="skills" class="skills-section">
+  <h2 class="skills-title">Skills</h2>
 
   <div class="skills-grid">
 
-    <div class="skill-card">
-      <i class="fa-brands fa-react"></i>
-      <h4>React / React Native</h4>
+    <!-- FRONTEND -->
+    <div class="skills-card">
+      <h3>Frontend</h3>
+
+      <div class="skill">
+        <span>HTML</span>
+        <div class="bar"><div style="width:90%"></div></div>
+        <small>90%</small>
+      </div>
+
+      <div class="skill">
+        <span>CSS</span>
+        <div class="bar"><div style="width:85%"></div></div>
+        <small>85%</small>
+      </div>
+
+      <div class="skill">
+        <span>JavaScript</span>
+        <div class="bar"><div style="width:80%"></div></div>
+        <small>80%</small>
+      </div>
+
+      <div class="skill">
+        <span>React</span>
+        <div class="bar"><div style="width:78%"></div></div>
+        <small>78%</small>
+      </div>
     </div>
 
-    <div class="skill-card">
-      <i class="fa-brands fa-node-js"></i>
-      <h4>Node.js / Express</h4>
+    <!-- BACKEND -->
+    <div class="skills-card">
+      <h3>Backend</h3>
+
+      <div class="skill">
+        <span>Node.js</span>
+        <div class="bar"><div style="width:90%"></div></div>
+        <small>90%</small>
+      </div>
+
+      <div class="skill">
+        <span>Express.js</span>
+        <div class="bar"><div style="width:80%"></div></div>
+        <small>80%</small>
+      </div>
+
+      <div class="skill">
+        <span>Spring Boot</span>
+        <div class="bar"><div style="width:60%"></div></div>
+        <small>60%</small>
+      </div>
     </div>
 
-    <div class="skill-card">
-      <i class="fa-solid fa-database"></i>
-      <h4>MongoDB / PostgreSQL</h4>
+    <!-- DATABASES -->
+    <div class="skills-card">
+      <h3>Databases</h3>
+
+      <div class="skill">
+        <span>MongoDB</span>
+        <div class="bar"><div style="width:90%"></div></div>
+        <small>70%</small>
+      </div>
+
+      <div class="skill">
+        <span>postgreSQL</span>
+        <div class="bar"><div style="width:70%"></div></div>
+        <small>70%</small>
+      </div>
+
+      <div class="skill">
+        <span>Firebase</span>
+        <div class="bar"><div style="width:70%"></div></div>
+        <small>90%</small>
+      </div>
     </div>
 
-    <div class="skill-card">
-      <i class="fa-brands fa-java"></i>
-      <h4>Java</h4>
+    <!-- TOOLS -->
+    <div class="skills-card">
+      <h3>Tools</h3>
+
+      <div class="skill">
+        <span>Git hub</span>
+        <div class="bar"><div style="width:75%"></div></div>
+        <small>80%</small>
+      </div>
+
+      <div class="skill">
+        <span>Software Development</span>
+        <div class="bar"><div style="width:80%"></div></div>
+        <small>80%</small>
+      </div>
+
+      <div class="skill">
+        <span>Testing</span>
+        <div class="bar"><div style="width:60%"></div></div>
+        <small>60%</small>
+      </div>
     </div>
 
-    <div class="skill-card">
-      <i class="fa-brands fa-python"></i>
-      <h4>Python</h4>
+    <!-- SOFT SKILLS -->
+    <div class="skills-card">
+      <h3>Soft Skills</h3>
+
+      <div class="skill">
+        <span>Team Work</span>
+        <div class="bar"><div style="width:100%"></div></div>
+        <small>100%</small>
+      </div>
+
+      <div class="skill">
+        <span>Communication</span>
+        <div class="bar"><div style="width:70%"></div></div>
+        <small>70%</small>
+      </div>
+
+      <div class="skill">
+        <span>Leadership</span>
+        <div class="bar"><div style="width:90%"></div></div>
+        <small>90%</small>
+      </div>
+
+      <div class="skill">
+        <span>Problem Solving</span>
+        <div class="bar"><div style="width:80%"></div></div>
+        <small>80%</small>
+
+         <div class="skill">
+        <span>Time Management & Organization</span>
+        <div class="bar"><div style="width:100%"></div></div>
+        <small>100%</small>
+      </div>
+
+      <div class="skill">
+        <span>Critical Thinking</span>
+        <div class="bar"><div style="width:70%"></div></div>
+        <small>70%</small>
+      </div>
+
+      </div>
     </div>
 
-    <div class="skill-card">
-      <i class="fa-brands fa-git-alt"></i>
-      <h4>Git & GitHub</h4>
-    </div>
+   
 
   </div>
 </section>
+
 
 <!-- CERTIFICATES -->
-<section id="certificates" class="section certificates-section">
-  <span class="pill">CERTIFICATES</span>
-  <h3>My Certifications</h3>
+<section id="certificates" class="cert-section">
+  <h2 class="cert-title">Certificates</h2>
 
-  <div class="certificates-grid">
+  <div class="cert-timeline">
 
-    <div class="certificate-card">
-      <h4>Full Stack Web Development</h4>
-      <p>Issued by XYZ Platform</p>
+    <!-- CERT 1 -->
+    <div class="cert-item active" onclick="setActiveCert(this)">
+      <div class="cert-dot"></div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <h3>JavaScript for Beginners</h3>
+          <span class="cert-status completed">Completed</span>
+        </div>
+
+        <p class="cert-org">Simplilearn SkillUp (2025)</p>
+
+        <a href="#"
+           class="cert-link"
+           data-img="images/cert-js.png"
+           onclick="openCert(event)">
+          View Certificate
+        </a>
+
+        <p class="cert-desc">
+          Learned JavaScript fundamentals including variables, functions,
+          loops, conditionals, and DOM manipulation.
+        </p>
+      </div>
     </div>
 
-    <div class="certificate-card">
-      <h4>React & Frontend Development</h4>
-      <p>Issued by ABC Academy</p>
+    <!-- CERT 2 -->
+    <div class="cert-item" onclick="setActiveCert(this)">
+      <div class="cert-dot"></div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <h3>React Native Fundamentals</h3>
+          <span class="cert-status completed">Completed</span>
+        </div>
+
+        <p class="cert-org">Alison (2025)</p>
+
+        <a href="#"
+           class="cert-link"
+           data-img="images/cert-react-native.png"
+           onclick="openCert(event)">
+          View Certificate
+        </a>
+
+        <p class="cert-desc">
+          Completed a comprehensive React Native course covering components,
+          navigation, hooks, and mobile UI development.
+        </p>
+      </div>
     </div>
 
-    <div class="certificate-card">
-      <h4>Java Programming</h4>
-      <p>Issued by University / Online Platform</p>
-    </div>
+    <!-- CERT 3 -->
+    <div class="cert-item" onclick="setActiveCert(this)">
+      <div class="cert-dot"></div>
 
-    <div class="certificate-card">
-      <h4>Database Management Systems</h4>
-      <p>Issued by Online Learning Platform</p>
+      <div class="cert-card">
+        <div class="cert-header">
+          <h3>Diploma in ICT & Computing</h3>
+          <span class="cert-status completed">Completed</span>
+        </div>
+
+        <p class="cert-org">IDM (2023)</p>
+
+        <a href="#"
+           class="cert-link"
+           data-img="images/cert-idm.jpg"
+           onclick="openCert(event)">
+          View Certificate
+        </a>
+
+        <p class="cert-desc">
+          Diploma in ICT & Computing (Level 4) completed with Distinction.
+        </p>
+      </div>
     </div>
 
   </div>
 </section>
+
+<!-- CERTIFICATE MODAL -->
+<div id="certModal" class="cert-modal" onclick="closeCert()">
+  <div class="cert-modal-content" onclick="event.stopPropagation()">
+    <span class="cert-close" onclick="closeCert()">×</span>
+    <img id="certImage" src="" alt="Certificate">
+  </div>
+</div>
+
 
 
 <!-- PROJECTS -->
