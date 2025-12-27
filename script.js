@@ -9,19 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", () => {
     let current = "";
 
-    sections.forEach((section) => {
+    sections.forEach(section => {
       const sectionTop = section.offsetTop - 120;
       const sectionHeight = section.offsetHeight;
 
-      if (
-        scrollY >= sectionTop &&
-        scrollY < sectionTop + sectionHeight
-      ) {
+      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
         current = section.getAttribute("id");
       }
     });
 
-    navLinks.forEach((link) => {
+    navLinks.forEach(link => {
       link.classList.remove("active");
       if (link.getAttribute("href") === `#${current}`) {
         link.classList.add("active");
@@ -35,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const faders = document.querySelectorAll(".fade");
 
   function fadeOnScroll() {
-    faders.forEach((el) => {
+    faders.forEach(el => {
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight - 120) {
         el.classList.add("show");
@@ -62,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ================================
-     TYPING ROLE ANIMATION (FIXED 🔥)
+     TYPING ROLE ANIMATION
   ================================ */
   const roles = ["Full Stack Developer", "Full Stack Developer"];
   let roleIndex = 0;
@@ -70,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let isDeleting = false;
 
   const roleText = document.getElementById("roleText");
-
   const typingSpeed = 90;
   const deletingSpeed = 50;
   const holdAfterType = 1000;
@@ -103,25 +99,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
   typeEffect();
 
-});
-/* PROJECT FADE-IN ANIMATION */
-const projectCards = document.querySelectorAll(".project-card");
+  /* ================================
+     PROJECT FADE-IN (VERTICAL ENTRY)
+  ================================ */
+  const projectCards = document.querySelectorAll(".project-card");
 
-projectCards.forEach(card => {
-  card.style.opacity = "0";
-  card.style.transform = "translateY(40px)";
-  card.style.transition = "0.6s ease";
-});
-
-const showProjects = () => {
   projectCards.forEach(card => {
-    const rect = card.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 100) {
-      card.style.opacity = "1";
-      card.style.transform = "translateY(0)";
-    }
+    card.style.opacity = "0";
+    card.style.transform = "translateY(40px)";
+    card.style.transition = "0.6s ease";
   });
-};
 
-window.addEventListener("scroll", showProjects);
-window.addEventListener("load", showProjects);
+  function showProjects() {
+    projectCards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) {
+        card.style.opacity = "1";
+        card.style.transform = "translateY(0)";
+      }
+    });
+  }
+
+  window.addEventListener("scroll", showProjects);
+  showProjects();
+
+  /* ================================
+     PROJECTS HORIZONTAL SLIDER
+     (CENTER ACTIVE)
+  ================================ */
+  const slider = document.querySelector(".projects-slider");
+  let isHovering = false;
+
+  if (slider) {
+    const cards = slider.querySelectorAll(".project-card");
+
+    function updateActiveCard() {
+      if (isHovering) return;
+
+      const center = slider.scrollLeft + slider.offsetWidth / 2;
+
+      cards.forEach(card => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        card.classList.remove("active");
+
+        if (Math.abs(center - cardCenter) < card.offsetWidth / 2) {
+          card.classList.add("active");
+        }
+      });
+    }
+
+    slider.addEventListener("scroll", updateActiveCard);
+    window.addEventListener("resize", updateActiveCard);
+
+    setTimeout(updateActiveCard, 200);
+
+    /* ================================
+       HOVER PRIORITY (FRONT PROJECT)
+    ================================ */
+    cards.forEach(card => {
+      card.addEventListener("mouseenter", () => {
+        isHovering = true;
+        cards.forEach(c => c.classList.remove("active"));
+      });
+
+      card.addEventListener("mouseleave", () => {
+        isHovering = false;
+        updateActiveCard(); // restore center project
+      });
+    });
+  }
+
+});
