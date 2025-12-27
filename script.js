@@ -67,9 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let isDeleting = false;
 
   const roleText = document.getElementById("roleText");
-  const typingSpeed = 90;
-  const deletingSpeed = 50;
-  const holdAfterType = 1000;
 
   function typeEffect() {
     if (!roleText) return;
@@ -81,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
       charIndex++;
 
       if (charIndex === currentRole.length) {
-        setTimeout(() => isDeleting = true, holdAfterType);
+        setTimeout(() => (isDeleting = true), 1000);
         return;
       }
     } else {
@@ -94,13 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    setTimeout(typeEffect, isDeleting ? deletingSpeed : typingSpeed);
+    setTimeout(typeEffect, isDeleting ? 50 : 90);
   }
 
   typeEffect();
 
   /* ================================
-     PROJECT FADE-IN (VERTICAL ENTRY)
+     PROJECT FADE-IN
   ================================ */
   const projectCards = document.querySelectorAll(".project-card");
 
@@ -124,8 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
   showProjects();
 
   /* ================================
-     PROJECTS HORIZONTAL SLIDER
-     (CENTER ACTIVE)
+     PROJECT SLIDER
   ================================ */
   const slider = document.querySelector(".projects-slider");
   let isHovering = false;
@@ -150,12 +146,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     slider.addEventListener("scroll", updateActiveCard);
     window.addEventListener("resize", updateActiveCard);
-
     setTimeout(updateActiveCard, 200);
 
-    /* ================================
-       HOVER PRIORITY (FRONT PROJECT)
-    ================================ */
     cards.forEach(card => {
       card.addEventListener("mouseenter", () => {
         isHovering = true;
@@ -164,9 +156,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
       card.addEventListener("mouseleave", () => {
         isHovering = false;
-        updateActiveCard(); // restore center project
+        updateActiveCard();
       });
     });
   }
 
+  /* ================================
+     CONTACT FORM – EMAILJS ✅🔥
+  ================================ */
+
+  if (typeof emailjs !== "undefined") {
+    emailjs.init("vTDh9D6uYL4B7e98W"); // ✅ Public Key
+  }
+
+  const contactForm = document.getElementById("contact-form");
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      emailjs.sendForm(
+        "service_zjhcunj",      // ✅ Service ID
+        "template_pbj3tfa",     // ✅ TEMPLATE ID (FIXED)
+        this
+      )
+      .then(() => {
+        alert("✅ Message sent successfully!");
+        this.reset();
+      })
+      .catch((error) => {
+        console.error("EmailJS error:", error);
+        alert("❌ Failed to send message");
+      });
+    });
+  }
+
+});
+/* ================================
+   NAVBAR CLICK FIX (OFFSET SCROLL)
+================================ */
+const navLinksAll = document.querySelectorAll(".navbar nav a");
+const navbarHeight = document.querySelector(".navbar").offsetHeight;
+
+navLinksAll.forEach(link => {
+  link.addEventListener("click", function (e) {
+    const targetId = this.getAttribute("href");
+
+    if (targetId.startsWith("#")) {
+      const targetEl = document.querySelector(targetId);
+
+      if (targetEl) {
+        e.preventDefault();
+
+        const elementPosition =
+          targetEl.getBoundingClientRect().top + window.pageYOffset;
+
+        const offsetPosition = elementPosition - navbarHeight - 10;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
+    }
+  });
 });

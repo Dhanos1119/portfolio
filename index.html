@@ -21,8 +21,11 @@
   <nav>
     <a href="#home">Home</a>
     <a href="#Services">Services</a>
+    <a href="#skills">Skills</a>          
+    <a href="#certificates">Certificates</a> 
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
+
   </nav>
 </header>
 
@@ -149,6 +152,78 @@
 
   </div>
 </section>
+
+
+<!-- SKILLS -->
+<section id="skills" class="section skills-section">
+  <span class="pill">SKILLS</span>
+  <h3>Technical Skills</h3>
+
+  <div class="skills-grid">
+
+    <div class="skill-card">
+      <i class="fa-brands fa-react"></i>
+      <h4>React / React Native</h4>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-brands fa-node-js"></i>
+      <h4>Node.js / Express</h4>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-solid fa-database"></i>
+      <h4>MongoDB / PostgreSQL</h4>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-brands fa-java"></i>
+      <h4>Java</h4>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-brands fa-python"></i>
+      <h4>Python</h4>
+    </div>
+
+    <div class="skill-card">
+      <i class="fa-brands fa-git-alt"></i>
+      <h4>Git & GitHub</h4>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section id="certificates" class="section certificates-section">
+  <span class="pill">CERTIFICATES</span>
+  <h3>My Certifications</h3>
+
+  <div class="certificates-grid">
+
+    <div class="certificate-card">
+      <h4>Full Stack Web Development</h4>
+      <p>Issued by XYZ Platform</p>
+    </div>
+
+    <div class="certificate-card">
+      <h4>React & Frontend Development</h4>
+      <p>Issued by ABC Academy</p>
+    </div>
+
+    <div class="certificate-card">
+      <h4>Java Programming</h4>
+      <p>Issued by University / Online Platform</p>
+    </div>
+
+    <div class="certificate-card">
+      <h4>Database Management Systems</h4>
+      <p>Issued by Online Learning Platform</p>
+    </div>
+
+  </div>
+</section>
+
 
 <!-- PROJECTS -->
 <section id="projects" class="section dark projects-section">
@@ -288,14 +363,62 @@
   </div>
 </section>
 
+<section id="contact" class="contact-section fade">
 
-<!-- CONTACT -->
-<section id="contact" class="section">
-  <h3>Contact</h3>
-  <p>Email: yourmail@gmail.com</p>
-  <p>GitHub: github.com/yourusername</p>
-  <p>LinkedIn: linkedin.com/in/yourusername</p>
+  <p class="contact-label">CONTACT</p>
+  <h2 class="contact-title">Contact With Me</h2>
+
+  <div class="contact-wrapper">
+
+    <!-- LEFT CARD -->
+    <div class="contact-profile">
+      <img src="images/dhanoshigan.png" alt="R.K.R Dhanoshigan" />
+
+      <h3>R.K.R Dhanoshigan</h3>
+      <span>Full Stack Developer</span>
+
+      <p>
+        Thanks for visiting my portfolio.
+        If you have any questions or would like to work together,
+        feel free to contact me.
+      </p>
+    </div>
+
+    <!-- RIGHT FORM -->
+    <form id="contact-form" class="contact-form">
+
+      <div class="form-row">
+        <div>
+          <label>Your Name</label>
+          <input type="text" name="name" required />
+        </div>
+
+        <div>
+          <label>Phone Number</label>
+          <input type="text" name="phone" />
+        </div>
+      </div>
+
+      <label>Email</label>
+      <input type="email" name="email" required />
+
+      <label>Subject</label>
+      <input type="text" name="subject" />
+
+      <label>Message</label>
+      <textarea name="message" rows="5" required></textarea>
+
+      <!-- hidden time field for EmailJS -->
+      <input type="hidden" name="time" />
+
+      <button type="submit">Send Message</button>
+    </form>
+
+  </div>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
 
 <footer>
   © 2025 R.K.R Dhanoshigan
